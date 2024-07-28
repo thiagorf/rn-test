@@ -1,6 +1,7 @@
 import { registerRootComponent } from "expo";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components/native";
 import { Todo } from "./Todo";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const COLORS = {
   default: "#7B2CBF",
@@ -14,9 +15,11 @@ const theme = {
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <Todo />
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider theme={theme}>
+        <Todo />
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }
 
