@@ -1,5 +1,5 @@
 import { registerRootComponent } from "expo";
-import { ChangeEvent, SyntheticEvent, useState } from "react";
+import { useState } from "react";
 import {
   Button,
   NativeSyntheticEvent,
@@ -13,6 +13,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import styled from "styled-components/native";
 
 interface TodoList {
   todo: string;
@@ -46,7 +47,7 @@ function App() {
   };
 
   return (
-    <SafeAreaView>
+    <Container>
       <View>
         <Text>Todo List</Text>
         <View>
@@ -58,17 +59,23 @@ function App() {
           {todo.map((item, i) => (
             <TouchableWithoutFeedback onPress={() => onTodoTouch(i)} key={i}>
               <View>
-                <Text style={styles({ complete: item.complete }).todo}>
-                  {item.todo}
-                </Text>
+                <TodoText $complete={item.complete}>{item.todo}</TodoText>
               </View>
             </TouchableWithoutFeedback>
           ))}
         </ScrollView>
       </View>
-    </SafeAreaView>
+    </Container>
   );
 }
+
+const Container = styled.SafeAreaView`
+  margin: 5px;
+`;
+
+const TodoText = styled.Text<{ $complete: boolean }>`
+  text-decoration: ${(props) => (props.$complete ? "line-through" : "none")};
+`;
 
 const styles = ({ complete }: TodoProps) =>
   StyleSheet.create({
